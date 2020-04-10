@@ -1,0 +1,52 @@
+program  FaterTekercselo;
+uses 
+  Declarations,
+  Timer,
+  Buttons;
+
+//rotary 10 egy fordulat      -    20???    tipus: isc3806-0036e-10bz
+//step motor 200 step egy fordulat
+//1.5mm menetlépés
+//nincs mikrostep
+
+//MAX elotolas: 2 mm. Ez igy OK?
+
+//d - elotolas
+//impulzusok szama per menet:   (200 / 1.5) * d
+//1 rotary pulse ->            ((200 / 1.5) * d) /20
+
+//0.35 mm/rev elotolas
+//46.6666 impulzus per rev
+//4.66666
+
+//           acc    + 4.66 =
+// 1.         0              4.66        4        0.66
+//            0.66           5.33        5        0.33
+//            0.33           5           5        0
+
+//------------------------------------------------------------------------------
+begin
+  initialize;
+
+  liCounter := 0;
+  ROTARY_1_LS := ROTARY_1;
+  PORTD_LS := PORTD;
+  BUTTONFLAGS := 0;
+
+  Feedrate_Set(1000);
+
+  wMotorAcc := 0;
+
+  InitTimer1();
+
+  LCD_initialize;
+
+  while true do
+  begin
+    Buttons_mainloop;
+    LCD_mainloop;
+  end;
+end.
+//------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
+//------------------------------------------------------------------------------

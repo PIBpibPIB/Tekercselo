@@ -1,0 +1,13 @@
+<display>
+	<Attributes>
+		<Url></Url>
+		<Image>DISPLEJ.jpeg</Image>
+		<File></File>
+	</Attributes>
+	<Events>
+		<OnLeftClick></OnLeftClick>
+		<OnRightClick></OnRightClick>
+		<OnDblClick>None</OnDblClick>
+		<OnMouseOver>PreviewImage</OnMouseOver>
+	</Events>
+</display>

@@ -1,0 +1,34 @@
+unit feedrate;
+uses Declarations;
+
+// !!!!     [ um / revolution ]      !!!!!
+
+procedure Feedrate_Set(val : word);
+function  Feedrate_Get : word;
+
+implementation
+var
+  feedrate : word;
+//------------------------------------------------------------------------------
+procedure Feedrate_Set(val : word);
+begin
+  if val > 1500 then
+    val := 1500;
+    
+  feedrate := val;
+  
+  // ((200 / 1500) * d) / 10  <==>   d / 75
+  // ((200 / 1500) * d) / 20  <==>   d / 150
+  // Szorzás MAGICNUMBER-rel, hogy legyen tört számláló.
+  wPulsePerRotary := (dword(MAGICNUMBER) * feedrate) / 150.0;
+end;
+//------------------------------------------------------------------------------
+function Feedrate_Get : word;
+begin
+  result := feedrate;
+end;
+//------------------------------------------------------------------------------
+end.
+//------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
+//------------------------------------------------------------------------------

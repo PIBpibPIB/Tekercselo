@@ -1,0 +1,121 @@
+unit Display;
+uses 
+  Declarations,
+  TImer,
+  feedrate;
+
+procedure LCD_initialize;
+procedure LCD_mainloop;
+procedure LCD_refreshvalues;
+
+implementation
+
+//------------------------------------------------------------------------------
+procedure DisplayCounter;
+var
+  shadow : longint;
+  txt    : array[7] of char;
+begin
+  GIE_bit := 0;
+  shadow := liCounter;
+  shadow := shadow /2;
+  GIE_bit := 1;
+
+  WordToStrWithZeros(word(shadow), txt);
+
+  txt[6] := 0;
+  txt[5] := txt[4];
+  txt[4] := '.';
+
+  Lcd_Out(1, 1, txt);
+
+  if DIR then
+    txt := '-->'
+  else
+    txt := '<--';
+  Lcd_Out(1, 14, txt);
+end;
+//------------------------------------------------------------------------------
+procedure DisplayStaticElements;
+begin
+  //Ami nem valtozik
+end;
+//------------------------------------------------------------------------------
+var 
+  liCounterls : longint;
+procedure DisplayRPM;
+var
+  d     : longint;
+  txt2  : string[9];
+begin
+  d := liCounterls - liCounter;
+  if d < 0 then d := -d;
+  d := d * 3; //min
+
+  WordToStr(word(d), txt2);
+
+  txt2[5] := ' ';
+  txt2[6] := 'R';
+  txt2[7] := 'P';
+  txt2[8] := 'M';
+  Lcd_Out(2, 8, txt2);
+
+  liCounterls := liCounter;
+end;
+//------------------------------------------------------------------------------
+procedure DisplayFeedrate;
+var
+  f : word;
+  txt : string[6];
+  tmp : string[7];
+begin
+  f := Feedrate_Get;
+
+  WordToStrWithZeros(f, txt);
+  txt[0] := txt[1];
+  txt[1] := '.';
+  txt[4] := 'm';
+  txt[5] := 'm';
+  txt[6] := 0;
+  Lcd_Out(2, 1, txt);
+end;
+//------------------------------------------------------------------------------
+procedure LCD_refreshvalues;  //(force) refresh displayed values
+begin
+  DisplayStaticElements;
+  DisplayCounter;
+  DisplayFeedrate;
+  DisplayRPM;
+  dwNextLCDUpdateTime := dwTicks + TICKSperSEC/10;
+  dwNextRPMMeasTime   := dwTicks + TICKSperSEC;
+end;
+//------------------------------------------------------------------------------
+procedure LCD_initialize;
+begin
+  Lcd_Init();                        // Initialize LCD
+  Lcd_Cmd(_LCD_CLEAR);               // Clear display
+  Lcd_Cmd(_LCD_CURSOR_OFF);          // Cursor off
+  
+  LCD_refreshvalues;
+end;
+//------------------------------------------------------------------------------
+procedure LCD_mainloop;
+begin
+ if dwTicks > dwNextLCDUpdateTime then  //100 ms ?
+  begin
+    dwNextLCDUpdateTime := dwTicks + TICKSperSEC/10;
+    DisplayCounter;
+  end;
+
+ if dwTicks > dwNextRPMMeasTime then    //1s ?
+  begin
+    dwNextRPMMeasTime := dwTicks + TICKSperSEC;
+    DisplayRPM;
+  end;
+end;
+//------------------------------------------------------------------------------
+end.
+//------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
+
