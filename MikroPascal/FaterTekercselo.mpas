@@ -25,6 +25,16 @@ uses
 //            0.33           5           5        0
 
 //------------------------------------------------------------------------------
+{
+procedure Interrupt;
+begin
+  if TMR2IF_bit then
+  begin
+    //PWMPIN := not PWMPIN;
+    TMR2IF_bit := 0;
+  end;
+end;          }
+
 begin
   initialize;
 
@@ -39,6 +49,10 @@ begin
 
   InitTimer1();
 
+  PWM_Init;
+  PWM_Set(100);
+  ADC_Init;
+  
   LCD_initialize;
 
   while true do

@@ -6,7 +6,7 @@ Value=-1
 [BUILD_TYPE]
 Value=0
 [ACTIVE_TAB]
-Value=FaterTekercselo.mpas
+Value=PWM.mpas
 [USE_EEPROM]
 Value=0
 [USE_HEAP]
@@ -16,13 +16,14 @@ Value=2000
 [EEPROM_DEFINITION]
 Value=
 [FILES]
-Count=6
+Count=7
 File0=FaterTekercselo.mpas
 File1=Declarations.mpas
 File2=TImer.mpas
 File3=Buttons.mpas
 File4=Display.mpas
 File5=feedrate.mpas
+File6=PWM.mpas
 [BINARIES]
 Count=0
 [IMAGES]
@@ -31,12 +32,12 @@ File0=DISPLEJ.jpeg
 ActiveImageIndex=0
 [OPENED_FILES]
 Count=6
-File0=FaterTekercselo.mpas
-File1=Declarations.mpas
-File2=TImer.mpas
-File3=Buttons.mpas
+File0=Declarations.mpas
+File1=FaterTekercselo.mpas
+File2=Timer.mpas
+File3=feedrate.mpas
 File4=Display.mpas
-File5=feedrate.mpas
+File5=PWM.mpas
 [EEPROM]
 Count=0
 [ACTIVE_COMMENTS_FILES]
@@ -46,13 +47,14 @@ File0=display.xml
 Count=1
 File0=RotaryPulseCalc.xlsx
 [SEARCH_PATH]
-Count=6
+Count=7
 Path0=D:\Megosztott\mikroPascal PRO for PIC\defs\
 Path1=D:\Megosztott\mikroPascal PRO for PIC\uses\P18\
-Path2=C:\Users\Elektro\Desktop\Tekercselo pascal\FaterTekercselo\
-Path3=C:\MikroPascal Projects\mikroPascal PRO for PIC\defs\
-Path4=C:\MikroPascal Projects\mikroPascal PRO for PIC\uses\P18\
-Path5=C:\Users\maage\Desktop\tekercselo\FaterTekercselo\
+Path2=C:\Users\Elektro\Desktop\tekercselo\MikroPascal\
+Path3=C:\Users\Elektro\Desktop\Tekercselo pascal\FaterTekercselo\
+Path4=C:\MikroPascal Projects\mikroPascal PRO for PIC\defs\
+Path5=C:\MikroPascal Projects\mikroPascal PRO for PIC\uses\P18\
+Path6=C:\Users\maage\Desktop\tekercselo\FaterTekercselo\
 [HEADER_PATH]
 Count=0
 [HEADERS]
@@ -60,14 +62,18 @@ Count=0
 [PLDS]
 Count=0
 [Useses]
-Count=4
+Count=7
 File0=Lcd_Constants
 File1=Lcd
 File2=Conversions
 File3=String
+File4=PWM12
+File5=PWM3
+File6=ADC
 [EXPANDED NODES]
 Node1=Sources
 Node2=Image Files
 Node3=Active Comments Files
-Node4=Other Files
-Count=4
+Node4=Output Files
+Node5=Other Files
+Count=5

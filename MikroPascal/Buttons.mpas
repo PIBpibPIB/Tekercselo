@@ -1,5 +1,6 @@
 unit Buttons;
 uses
+  PWM,
   feedrate,
   Display,
   Declarations;
@@ -33,6 +34,7 @@ const
 procedure Buttons_mainloop;
 var
   wi : word;
+  bi : byte;
 begin
   if BUTTONFLAGS > 0 then
   begin
@@ -74,6 +76,7 @@ begin
           //--------------------------------------------------------------
           RIGHT :
           begin
+            bi := PWM_Get;
           end;
           //--------------------------------------------------------------
           RST :         //D5
