@@ -1,5 +1,6 @@
 unit Display;
 uses 
+  PWM,
   Declarations,
   TImer,
   feedrate;
@@ -100,11 +101,31 @@ begin
 end;
 //------------------------------------------------------------------------------
 procedure LCD_mainloop;
+var
+  wi : word;
+  bi : byte;
+  bk : byte;
 begin
  if dwTicks > dwNextLCDUpdateTime then  //100 ms ?
   begin
     dwNextLCDUpdateTime := dwTicks + TICKSperSEC/10;
     DisplayCounter;
+    
+    wi := ADC_Read(0);
+    wi := ADC_Read(0);
+    wi := ADC_Read(0);
+    wi := ADC_Read(0);
+
+    wi := 0;
+    for bk := 0 to 15 do
+      wi := wi + ADC_Read(0);
+
+    bi := Lo(wi shr 6);
+
+    if bi < 10 then bi := 0;
+    if bi > 245 then bi := 255;
+    
+    PWM_Set(bi);
   end;
 
  if dwTicks > dwNextRPMMeasTime then    //1s ?
@@ -118,4 +139,3 @@ end.
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
-

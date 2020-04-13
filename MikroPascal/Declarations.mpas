@@ -21,6 +21,8 @@ var
 
   STEP     : sbit at LATC.6;
   DIR      : sbit at LATC.2;
+  
+  PWMPIN   : sbit at LATA.4;
 
   SWITCH_1 : sbit at PORTC.4;
   SWITCH_2 : sbit at PORTC.5;
@@ -48,19 +50,22 @@ implementation
 //------------------------------------------------------------------------------
 procedure initialize;
 begin
-  TRISD   := 0xFF;
-  ANSELD  := 0;
-
-  TRISB   := 0;
+  ANSELA  := 0;
   ANSELB  := 0;                       // Configure PORTB pins as digital
+  ANSELC  := 0;
+  ANSELD  := 0;
+  
+  CM1CON0 := 0;
+  CM2CON0 := 0;
 
   TRISC   := 0xFF;
   TRISC.2 := 0; //DIR
   TRISC.6 := 0; //STEP
-  ANSELC  := 0;
+
+  TRISB   := 0;
+  TRISD   := 0xFF;
   
-  CM1CON0 := 0;
-  CM2CON0 := 0;
+  TRISA.4 := 0; //PWM
 
   DIR     := 0;
   STEP    := 0;
