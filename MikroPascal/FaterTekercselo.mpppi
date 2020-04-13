@@ -6,7 +6,7 @@ Value=-1
 [BUILD_TYPE]
 Value=0
 [ACTIVE_TAB]
-Value=Display.mpas
+Value=PWM.mpas
 [USE_EEPROM]
 Value=0
 [USE_HEAP]
@@ -31,12 +31,13 @@ Count=1
 File0=DISPLEJ.jpeg
 ActiveImageIndex=0
 [OPENED_FILES]
-Count=5
+Count=6
 File0=Declarations.mpas
 File1=FaterTekercselo.mpas
 File2=Timer.mpas
 File3=feedrate.mpas
 File4=Display.mpas
+File5=PWM.mpas
 [EEPROM]
 Count=0
 [ACTIVE_COMMENTS_FILES]
