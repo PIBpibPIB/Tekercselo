@@ -4,3 +4,5 @@ Version=1.0
 ProjectPath=Tekercselo\Tekercselo.PrjPcb
 [Project2]
 ProjectPath=PIC18F47J53_Insert_V13\PIC18F47J53_Insert_V13.prjpcb
+[Project3]
+ProjectPath=SCH PCB\Winding Machine.PrjPcb
