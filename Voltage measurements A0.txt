@@ -1,0 +1,10 @@
+ 
+Voltage measurement on A0 pin respected to ground (on press state):
+
+    Default state  : 4.66V
+    Select button  : 3.30V
+    Left button    : 2.20V
+    Up button      : 0.620V
+    Down button    : 1.425V
+    Right button   : 0.05V
+    reset button   : 4.66V
