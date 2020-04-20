@@ -1,0 +1,6 @@
+Removed Pin From Net: NetName=Net*1_23 Pin=Display1-3
+Removed Pin From Net: NetName=Net*1_24 Pin=Display1-4
+Added Pin To Net: NetName=Net*1_24 Pin=Display1-3
+Added Pin To Net: NetName=Net*1_23 Pin=Display1-4
+Added Member To Class: ClassName=Winding Machine sch Member=Component P9 PWM
+Added Room: Name=Winding Machine sch

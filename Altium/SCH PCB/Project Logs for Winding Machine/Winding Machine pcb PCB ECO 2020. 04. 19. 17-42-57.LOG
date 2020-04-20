@@ -1,0 +1,16 @@
+Removed Pin From Net: NetName=3.3V Pin=R13-2
+Removed Pin From Net: NetName=NetR15_3 Pin=R14-1
+Removed Pin From Net: NetName=Net*1_15 Pin=R14-2
+Change Component Footprint: Designator=R15 Old Footprint=POTI New Footprint=VR5
+Added Component: Designator=R16(AXIAL-0.3)
+Added Pin To Net: NetName=NetP8_2 Pin=R13-2
+Added Pin To Net: NetName=Net*1_1 Pin=R14-1
+Added Pin To Net: NetName=3.3V Pin=R14-2
+Added Pin To Net: NetName=GND Pin=R15-1
+Added Pin To Net: NetName=3.3V Pin=R15-2
+Added Pin To Net: NetName=NetR15_3 Pin=R15-3
+Added Pin To Net: NetName=NetR15_3 Pin=R14-1
+Added Pin To Net: NetName=Net*1_15 Pin=R14-2
+Added Member To Class: ClassName=Winding Machine sch Member=Component R15 RPot
+Added Member To Class: ClassName=Winding Machine sch Member=Component R16 Res1
+Added Room: Name=Winding Machine sch

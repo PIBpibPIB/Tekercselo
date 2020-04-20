@@ -1,0 +1,9 @@
+Removed Pin From Net: NetName=5V Pin=D2-1
+Removed Pin From Net: NetName=NetD2_2 Pin=R10-1
+Removed Pin From Net: NetName=GND Pin=R10-2
+Change Component Footprint: Designator=D3 Old Footprint=KLED 3mm New Footprint=Led Standing
+Change Component Footprint: Designator=D2 Old Footprint=LED 3mm New Footprint=Led Standing
+Added Pin To Net: NetName=GND Pin=D2-2
+Added Pin To Net: NetName=5V Pin=R10-1
+Added Pin To Net: NetName=NetD2_2 Pin=R10-2
+Added Room: Name=Winding Machine sch

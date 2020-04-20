@@ -1,0 +1,4 @@
+Change Component DesignItemId : Designator=R12 Old DesignItemId=Res2 New DesignItemId=Res1
+Change Component Footprint: Designator=R12 Old Footprint=AXIAL-0.4 New Footprint=AXIAL-0.3
+Change Component Comment : Designator=R12 Old Comment=Res2 New Comment=Res1
+Added Room: Name=Winding Machine sch

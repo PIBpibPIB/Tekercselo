@@ -1,0 +1,28 @@
+Removed Pin From Net: NetName=GND Pin=P9-2
+Removed Pin From Net: NetName=NetP3_1 Pin=R1-1
+Removed Pin From Net: NetName=Net*1_30 Pin=R1-2
+Removed Pin From Net: NetName=3.3V Pin=R10-1
+Removed Pin From Net: NetName=Net*1_25 Pin=R10-2
+Change Component DesignItemId : Designator=R11 Old DesignItemId=Res1 New DesignItemId=RPot
+Change Component Footprint: Designator=R11 Old Footprint=AXIAL-0.3 New Footprint=POTI
+Change Component Comment : Designator=R11 Old Comment=Res1 New Comment=RPot
+Change Component Designator: OldDesignator=R11 NewDesignator=R14
+Added Component: Designator=R2(AXIAL-0.3)
+Added Component: Designator=R13(AXIAL-0.3)
+Added Pin To Net: NetName=GND Pin=P9-1
+Added Pin To Net: NetName=5V Pin=R1-1
+Added Pin To Net: NetName=3.3V Pin=R1-2
+Added Pin To Net: NetName=NetP3_1 Pin=R1-1
+Added Pin To Net: NetName=Net*1_30 Pin=R1-2
+Added Pin To Net: NetName=Net*1_28 Pin=R10-1
+Added Pin To Net: NetName=NetQ2_3 Pin=R10-2
+Added Pin To Net: NetName=3.3V Pin=R10-1
+Added Pin To Net: NetName=Net*1_25 Pin=R10-2
+Added Pin To Net: NetName=NetR14_3 Pin=R14-3
+Added Pin To Net: NetName=NetP9_2 Pin=P9-2
+Added Pin To Net: NetName=NetP9_2 Pin=Q1-2
+Added Pin To Net: NetName=NetP9_2 Pin=R12-2
+Added Net: Name=NetP9_2
+Added Member To Class: ClassName=Winding Machine sch Member=Component R2 Res1
+Added Member To Class: ClassName=Winding Machine sch Member=Component R13 Res1
+Added Room: Name=Winding Machine sch

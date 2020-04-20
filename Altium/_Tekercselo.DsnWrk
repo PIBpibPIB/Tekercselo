@@ -1,8 +1,4 @@
 [ProjectGroup]
 Version=1.0
 [Project1]
-ProjectPath=Tekercselo\Tekercselo.PrjPcb
-[Project2]
-ProjectPath=PIC18F47J53_Insert_V13\PIC18F47J53_Insert_V13.prjpcb
-[Project3]
-ProjectPath=SCH PCB\Winding Machine.PrjPcb
+ProjectPath=..\..\Push Button DC Motor Controller\Push Button DC Motor Controller.PrjPcb

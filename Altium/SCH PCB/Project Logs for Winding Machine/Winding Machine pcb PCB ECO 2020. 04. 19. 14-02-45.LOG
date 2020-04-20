@@ -1,0 +1,7 @@
+Removed Pin From Net: NetName=Net*1_29 Pin=Display1-1
+Removed Pin From Net: NetName=Net*1_30 Pin=R2-1
+Removed Pin From Net: NetName=Net*1_30 Pin=R5-2
+Added Pin To Net: NetName=Net*1_30 Pin=Display1-1
+Added Pin To Net: NetName=Net*1_29 Pin=R2-1
+Added Pin To Net: NetName=Net*1_29 Pin=R5-2
+Added Room: Name=Winding Machine sch
