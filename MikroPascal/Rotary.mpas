@@ -1,0 +1,43 @@
+unit Rotary;
+uses
+  Declarations;
+  
+procedure Rotary_interrupt;
+
+var
+  direction : boolean;
+
+implementation
+
+var
+ lastdirection : boolean;
+
+//------------------------------------------------------------------------------
+procedure Rotary_interrupt;
+var
+  direction : boolean;
+begin
+  if ROTARY_1 <> ROTARY_1_LS then
+  begin
+    direction := ROTARY_1 <> ROTARY_2;
+
+    if direction then
+      inc(liCounter)
+    else
+      dec(liCounter);
+
+    if lastdirection <> direction then
+      DIR := not DIR;
+
+    lastdirection := direction;
+
+    wMotorAcc := wMotorAcc + wPulsePerRotary;
+  end;
+  
+  ROTARY_1_LS := ROTARY_1;
+end;
+//------------------------------------------------------------------------------
+end.
+//------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
+//------------------------------------------------------------------------------

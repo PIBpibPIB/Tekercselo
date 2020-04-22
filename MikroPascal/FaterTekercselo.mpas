@@ -4,18 +4,16 @@ uses
   Timer,
   Buttons;
 
-//rotary 10 egy fordulat      -    20???    tipus: isc3806-0036e-10bz
-//step motor 200 step egy fordulat
-//1.5mm menetlÃ©pÃ©s
-//nincs mikrostep
-
-//MAX elotolas: 2 mm. Ez igy OK?
+//rotary 20 egy fordulat   tipus: isc3806-0036e-10bz
+//step motor 200*8 step egy fordulat
+//1.5mm menetlépés
+//8-as mikrostep
 
 //d - elotolas
-//impulzusok szama per menet:   (200 / 1.5) * d
-//1 rotary pulse ->            ((200 / 1.5) * d) /20
+//impulzusok szama per menet:   (200*8 / 1.5) * d
+//1 rotary pulse ->            ((200*8 / 1.5) * d) /20
 
-//0.35 mm/rev elotolas
+//pl.:
 //46.6666 impulzus per rev
 //4.66666
 
@@ -25,15 +23,6 @@ uses
 //            0.33           5           5        0
 
 //------------------------------------------------------------------------------
-{
-procedure Interrupt;
-begin
-  if TMR2IF_bit then
-  begin
-    //PWMPIN := not PWMPIN;
-    TMR2IF_bit := 0;
-  end;
-end;          }
 
 begin
   PLLEN_bit := 1;
@@ -41,26 +30,33 @@ begin
 
   initialize;
 
+  BUZZER := 0;
+
   ADC_Init;
 
-  INPUTS_LS := 0;
+  INPUT_LS := 0;
   ROTARY_1_LS := ROTARY_1;
 
   BUTTONFLAGS := 0;
   liCounter := 0;
   wMotorAcc := 0;
   Feedrate_Set(1000);
+  
   InitTimer();
-
-{  PWM_Init;
-  PWM_Set(100);}
+  
+  PWM_Init;
 
   LCD_initialize;
+  
+  BUZZER := 1; delay_ms(50);  BUZZER := 0; 
+  delay_ms(50);
+  BUZZER := 1; delay_ms(50);  BUZZER := 0;
 
   while true do
   begin
-    //Buttons_mainloop;
+    Buttons_mainloop;
     LCD_mainloop;
+    PWM_Mainloop;
   end;
 end.
 //------------------------------------------------------------------------------

@@ -1,19 +1,19 @@
 unit TImer;
 uses
+  Rotary,
+  Feedrate,
   Declarations;
 
 const
+  PRELOADHI   = 208;
+  PRELOADLO   = 42;
   TICKSperSEC = 1000;
   
 procedure InitTimer;
+procedure Buttons_interrupt; external;
 
 implementation
-var
- pulsewaittime : byte;
- 
-const
-  PRELOADHI   = 208;
-  PRELOADLO   = 42;
+
 //------------------------------------------------------------------------------
 procedure InitTimer;
 begin
@@ -29,77 +29,27 @@ begin
   T3CON.TMR3ON := 1;
 end;
 //------------------------------------------------------------------------------
-var
-  lastdirection : boolean;
-  
 procedure Interrupt;
 var
   i         : byte;
   k         : byte;
-  direction : boolean;
 begin
   if (TMR3IF_bit) then
   begin
-    inc(dwTicks);
-    TMR3IF_bit := 0;
-
     TMR3H      := PRELOADHI;
     TMR3L      := PRELOADLO;
+    TMR3IF_bit := 0;
+    
+    inc(dwTicks);
 
     //Rotary
-    if ROTARY_1 <> ROTARY_1_LS then
-    begin
-      direction := ROTARY_1 <> ROTARY_2;
-      
-      if direction then
-        inc(liCounter)
-      else
-        dec(liCounter);
+    Rotary_interrupt;
 
-      if lastdirection <> direction then
-        DIR := not DIR;
-        
-      lastdirection := direction;
-      
-      wMotorAcc := wMotorAcc + wPulsePerRotary;
-    end;
-    ROTARY_1_LS := ROTARY_1;
-    
-    liCounter := ADC_Get_Sample(8);
-    
-    {
     //Buttons
-    k := PORTD xor PORTD_LS;
-    if k > 0 then
-    begin
-      //Edge was detected
-      for i := 0 to 7 do
-      begin
-        if (k.i = 1) and (PORTD.i = 0) then
-          BUTTONFLAGS.i := 1;
-      end;
-    end;
-    PORTD_LS := PORTD;           }
+    Buttons_interrupt;
 
     //Step motor pulses
-    if STEP = 1 then
-    begin
-      STEP := 0;
-      pulsewaittime := 4;
-    end
-    else
-    begin
-      if pulsewaittime = 0 then
-      begin
-        if wMotorAcc >= MAGICNUMBER then
-        begin
-          STEP := 1;
-          wMotorAcc := wMotorAcc - MAGICNUMBER;
-        end;
-      end
-      else
-        dec(pulsewaittime);
-    end;
+    StepMotor_interrupt;
   end;
 end;
 //------------------------------------------------------------------------------

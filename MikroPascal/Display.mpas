@@ -19,14 +19,14 @@ var
 begin
   GIE_bit := 0;
   shadow := liCounter;
-//  shadow := shadow /2;
+  shadow := shadow /2;
   GIE_bit := 1;
 
   WordToStrWithZeros(word(shadow), txt);
-  {
+
   txt[6] := 0;
   txt[5] := txt[4];
-  txt[4] := '.';}
+  txt[4] := '.';
 
   Lcd_Out(1, 1, txt);
 
@@ -106,42 +106,17 @@ var
   bi : byte;
   bk : byte;
 begin
-  if dwTicks > dwNextLCDUpdateTime then  //25 ms ?
+  if dwTicks > dwNextLCDUpdateTime then  //25 ms
   begin
-    dwNextLCDUpdateTime := dwTicks + TICKSperSEC/40;
-
+    dwNextLCDUpdateTime := dwTicks + TICKSperSEC / 40;
     DisplayCounter;
   end;
 
-                 {
-  if .. ten
-  begin
-    wi := ADC_Read(0);
-    wi := ADC_Read(0);
-    wi := ADC_Read(0);
-    wi := ADC_Read(0);
-
-    wi := 0;
-    for bk := 0 to 15 do
-      wi := wi + ADC_Read(0);
-
-    bi := Lo(wi shr 6);
-
-    if bi < 10 then bi := 0;
-    if bi > 245 then bi := 255;
-    
-    PWM_Set(bi);
-  end;             }
-  
-  
-  
-  
- {
-  if dwTicks > dwNextRPMMeasTime then    //1s ?
+  if dwTicks > dwNextRPMMeasTime then    //1s
   begin
     dwNextRPMMeasTime := dwTicks + TICKSperSEC;
     DisplayRPM;
-  end;         }
+  end;
 end;
 //------------------------------------------------------------------------------
 end.

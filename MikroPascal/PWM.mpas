@@ -1,30 +1,55 @@
 unit PWM;
-
-//   !!!!  E.2  !!!!
+uses
+  Declarations;
 
 procedure PWM_Init;
 procedure PWM_Set(val : byte);
 function  PWM_Get : byte;
+procedure PWM_Mainloop;
 
 implementation
 var
   pwm : byte;
+  dwnextpwmtime : dword;
 //------------------------------------------------------------------------------
 procedure PWM_Init;
 begin
-//  PWM5_Init(10000);
-//  PWM5_Start;
+  dwnextpwmtime :=0;
+  
+  Unlock_IOLOCK;
+  PPS_Mapping_NoLock(3, _OUTPUT, _CCP1_P1A);
+  Lock_IOLOCK;
+  
+  PWM1_Init(10000);
+  PWM1_Start;
+  PWM_Set(0);
 end;
 //------------------------------------------------------------------------------
 procedure PWM_Set(val : byte);
 begin
   pwm := val;
-//  PWM5_Set_Duty(val);
+  PWM1_Set_Duty(val);
 end;
 //------------------------------------------------------------------------------
 function  PWM_Get : byte;
 begin
   result := pwm;
+end;
+//------------------------------------------------------------------------------
+procedure PWM_Mainloop;
+var
+  adval : word;
+begin
+  if dwticks > dwnextpwmtime then
+  begin
+    dwnextpwmtime := dwticks + 10;
+    
+    adval := ADC_Read(5);
+    adval := ADC_Read(5);
+    
+    adval := adval shr 4;
+    PWM_Set(Lo(adval));
+  end;
 end;
 //------------------------------------------------------------------------------
 end.

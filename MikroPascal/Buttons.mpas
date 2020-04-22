@@ -4,7 +4,8 @@ uses
   feedrate,
   Display,
   Declarations;
-  
+
+procedure Buttons_interrupt;
 procedure Buttons_mainloop;
 
 //display photo:  ac:display
@@ -20,19 +21,61 @@ procedure Buttons_mainloop;
 //                 3
 //------------------------------------------------------------------------------
 implementation
+var
+  INPUT   : byte;
 const
   SELECT     = 0;
   LEFT       = 1;
   UP         = 2;
   DOWN       = 3;
   RIGHT      = 4;
-  RST        = 5;
+  STOP       = 5;
 
   ENDSTOP_R   = 6;
   ENDSTOP_L   = 7;
 
+//------------------------------------------------------------------------------
+function isbetween(val, min, max : word) : boolean;
+begin
+  if val > max then begin result := false; exit; end;
+  if val < min then begin result := false; exit; end;
+  result := true;
+end;
+//------------------------------------------------------------------------------
+procedure Buttons_interrupt;
+var
+  adval     : word;
+  k         : word;
+begin
+  adval :=  ADC_Get_Sample(8);
+  adval :=  ADC_Get_Sample(8);
+  INPUT := 0;
 
+  if isbetween(adval,    0,  298) then INPUT.RIGHT  := 1;
+  if isbetween(adval,  323,  794) then INPUT.UP     := 1;
+  if isbetween(adval,  993, 1588) then INPUT.DOWN   := 1;
+  if isbetween(adval, 1638, 2308) then INPUT.LEFT   := 1;
+  if isbetween(adval, 2730, 3127) then INPUT.SELECT := 1;
 
+  INPUT.STOP      := BUTTON_STOP;
+  INPUT.ENDSTOP_R := ENDSTOP_RIGHT;
+  INPUT.ENDSTOP_L := ENDSTOP_LEFT;
+
+  //Button edge detection
+  k := PORTD xor INPUT_LS;
+  if k > 0 then
+  begin
+    //Edge was detected
+    for i := 0 to 7 do
+    begin
+      if (k.i = 1) and (INPUT.i = 0) then
+        BUTTONFLAGS.i := 1;
+    end;
+  end;
+  INPUT_LS := INPUT;
+
+end;
+//------------------------------------------------------------------------------
 procedure Buttons_mainloop;
 var
   wi : word;
@@ -81,7 +124,7 @@ begin
             bi := PWM_Get;
           end;
           //--------------------------------------------------------------
-          RST :         //D5
+          STOP :         //D5
           begin
             liCounter := 0;
             LCD_refreshvalues;

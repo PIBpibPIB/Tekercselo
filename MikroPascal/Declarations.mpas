@@ -1,12 +1,12 @@
 unit Declarations;
-// LCD module connections
+
 var
-  LCD_RS : sbit  at LATB5_bit;
-  LCD_EN : sbit  at LATB4_bit;
-  LCD_D4 : sbit  at LATA3_bit;
-  LCD_D5 : sbit  at LATA2_bit;
-  LCD_D6 : sbit  at LATA1_bit;
-  LCD_D7 : sbit  at LATA0_bit;
+  LCD_RS           : sbit  at LATB5_bit;
+  LCD_EN           : sbit  at LATB4_bit;
+  LCD_D4           : sbit  at LATA3_bit;
+  LCD_D5           : sbit  at LATA2_bit;
+  LCD_D6           : sbit  at LATA1_bit;
+  LCD_D7           : sbit  at LATA0_bit;
 
   LCD_RS_Direction : sbit at TRISB5_bit;
   LCD_EN_Direction : sbit at TRISB4_bit;
@@ -15,27 +15,32 @@ var
   LCD_D6_Direction : sbit at TRISA1_bit;
   LCD_D7_Direction : sbit at TRISA0_bit;
 
-var
-  ROTARY_1 : sbit at PORTD.7;
-  ROTARY_2 : sbit at PORTB.1;
+  ROTARY_1         : sbit at PORTD.7;
+  ROTARY_2         : sbit at PORTB.1;
 
-  STEP     : sbit at LATD.6;
-  DIR      : sbit at LATB.3;
+  STEP             : sbit at LATD.6;
+  DIR              : sbit at LATB.3;
 
-const MAGICNUMBER = 2000;
+  ENDSTOP_RIGHT    : sbit at PORTC.7;
+  ENDSTOP_LEFT     : sbit at PORTD.3;
+
+  BUTTON_STOP      : sbit at PORTC.6;
+
+  BUZZER           : sbit at LATC.1;
+
 var
   i                   : byte;
   
   liCounter           : longint; volatile;
   ROTARY_1_LS         : boolean; volatile;
-  INPUTS_LS           : byte;    volatile;
+  INPUT_LS            : byte;    volatile;
   BUTTONFLAGS         : byte;    volatile;
   
   dwTicks             : dword;   volatile;
   dwNextLCDUpdateTime : dword;
   dwNextRPMMeasTime   : dword;
   
-  wPulsePerRotary     : word; //[(pulse count *MAGICNUMBER) / (revolution /10) ]
+  wPulsePerRotary     : word; //[(pulse count *MAGICNUMBER) / (revolution /20) ]
   wMotorAcc           : word;
 
 procedure initialize;
@@ -57,13 +62,13 @@ begin
   PIR3 := 0;
 
   //komparatorok tiltva
-  CM1CON:=0;
-  CM2CON:=0;
-  CM3CON:=0;
+  CM1CON := 0;
+  CM2CON := 0;
+  CM3CON := 0;
 
   //minden input digital
-  ANCON0:=%11111111;
-  ANCON1:=%00011110;
+  ANCON0 := %11011111;
+  ANCON1 := %00011110;
 
   //digitalis kimenetek
   TRISA := 0xFF;
@@ -73,10 +78,13 @@ begin
   TRISE := 0xFF;
   
   TRISD.6 := 0; //STEP
-  LATB.3  := 0; //DIR
+  TRISB.3 := 0; //DIR
+  
+  TRISC.1 := 0; //BUZZER
+  TRISB.0 := 0; //PWM output
 
   //start interrupt
-  INTCON.GIE:=1;
+  INTCON.GIE := 1;
 
   //Enable peripheral interrupts
   INTCON.PEIE := 1;
