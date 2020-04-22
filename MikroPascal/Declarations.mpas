@@ -1,32 +1,26 @@
 unit Declarations;
 // LCD module connections
 var
-  LCD_RS : sbit  at LATB4_bit;
-  LCD_EN : sbit  at LATB5_bit;
-  LCD_D4 : sbit  at LATB0_bit;
-  LCD_D5 : sbit  at LATB1_bit;
-  LCD_D6 : sbit  at LATB2_bit;
-  LCD_D7 : sbit  at LATB3_bit;
+  LCD_RS : sbit  at LATB5_bit;
+  LCD_EN : sbit  at LATB4_bit;
+  LCD_D4 : sbit  at LATA3_bit;
+  LCD_D5 : sbit  at LATA2_bit;
+  LCD_D6 : sbit  at LATA1_bit;
+  LCD_D7 : sbit  at LATA0_bit;
 
-  LCD_RS_Direction : sbit at TRISB4_bit;
-  LCD_EN_Direction : sbit at TRISB5_bit;
-  LCD_D4_Direction : sbit at TRISB0_bit;
-  LCD_D5_Direction : sbit at TRISB1_bit;
-  LCD_D6_Direction : sbit at TRISB2_bit;
-  LCD_D7_Direction : sbit at TRISB3_bit;
+  LCD_RS_Direction : sbit at TRISB5_bit;
+  LCD_EN_Direction : sbit at TRISB4_bit;
+  LCD_D4_Direction : sbit at TRISA3_bit;
+  LCD_D5_Direction : sbit at TRISA2_bit;
+  LCD_D6_Direction : sbit at TRISA1_bit;
+  LCD_D7_Direction : sbit at TRISA0_bit;
 
 var
-  ROTARY_1 : sbit at PORTC.0;
-  ROTARY_2 : sbit at PORTC.1;
+  ROTARY_1 : sbit at PORTD.7;
+  ROTARY_2 : sbit at PORTB.1;
 
-  STEP     : sbit at LATC.6;
-  DIR      : sbit at LATC.2;
-  
-  PWMPIN   : sbit at LATA.4;
-
-  SWITCH_1 : sbit at PORTC.4;
-  SWITCH_2 : sbit at PORTC.5;
-
+  STEP     : sbit at LATD.6;
+  DIR      : sbit at LATB.3;
 
 const MAGICNUMBER = 2000;
 var
@@ -34,7 +28,7 @@ var
   
   liCounter           : longint; volatile;
   ROTARY_1_LS         : boolean; volatile;
-  PORTD_LS            : byte;    volatile;
+  INPUTS_LS           : byte;    volatile;
   BUTTONFLAGS         : byte;    volatile;
   
   dwTicks             : dword;   volatile;
@@ -50,25 +44,45 @@ implementation
 //------------------------------------------------------------------------------
 procedure initialize;
 begin
-  ANSELA  := 0;
-  ANSELB  := 0;                       // Configure PORTB pins as digital
-  ANSELC  := 0;
-  ANSELD  := 0;
+  //Disable interrupts
+  INTCON := 0;                             // Disable GIE, PEIE, TMR0IE,INT0IE,RBIE
+  INTCON2 :=0;
+  INTCON3 := 0;
+  RCON.IPEN := 0;                          // Disable Priority Levels on interrupts
+  PIE1 := 0;
+  PIE2 := 0;
+  PIE3 := 0;
+  PIR1 := 0;
+  PIR2 := 0;
+  PIR3 := 0;
+
+  //komparatorok tiltva
+  CM1CON:=0;
+  CM2CON:=0;
+  CM3CON:=0;
+
+  //minden input digital
+  ANCON0:=%11111111;
+  ANCON1:=%00011110;
+
+  //digitalis kimenetek
+  TRISA := 0xFF;
+  TRISB := 0xFF;
+  TRISC := 0xFF;
+  TRISD := 0xFF;
+  TRISE := 0xFF;
   
-  CM1CON0 := 0;
-  CM2CON0 := 0;
+  TRISD.6 := 0; //STEP
+  LATB.3  := 0; //DIR
 
-  TRISC   := 0xFF;
-  TRISC.2 := 0; //DIR
-  TRISC.6 := 0; //STEP
+  //start interrupt
+  INTCON.GIE:=1;
 
-  TRISB   := 0;
-  TRISD   := 0xFF;
-  
-  TRISA.4 := 0; //PWM
+  //Enable peripheral interrupts
+  INTCON.PEIE := 1;
 
-  DIR     := 0;
-  STEP    := 0;
+  RBPU_bit := 1;
+  REPU_bit := 1;
 end;
 //------------------------------------------------------------------------------
 end.

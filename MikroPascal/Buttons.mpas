@@ -31,6 +31,8 @@ const
   ENDSTOP_R   = 6;
   ENDSTOP_L   = 7;
 
+
+
 procedure Buttons_mainloop;
 var
   wi : word;

@@ -3,28 +3,30 @@ uses
   Declarations;
 
 const
-  TICKSperSEC = 5000;
+  TICKSperSEC = 1000;
   
-procedure InitTimer1;
+procedure InitTimer;
 
 implementation
 var
  pulsewaittime : byte;
  
 const
-  PRELOADHI   = 0xF6;
-  PRELOADLO   = 0xA0;
+  PRELOADHI   = 208;
+  PRELOADLO   = 42;
 //------------------------------------------------------------------------------
-procedure InitTimer1;
+procedure InitTimer;
 begin
-  dwTicks       := 0;
+  T3CON        := 0;
+
+  TMR3H      := PRELOADHI;
+  TMR3L      := PRELOADLO;
   
-  T1CON         := 0x01;
-  TMR1IF_bit    := 0;
-  TMR1H         := PRELOADHI;
-  TMR1L         := PRELOADLO;
-  TMR1IE_bit    := 1;
-  INTCON        := 0xC0;
+  PIR2.TMR3IF  := 1;
+  PIE2.TMR3IE  := 1;
+  dwTicks      := 0;
+
+  T3CON.TMR3ON := 1;
 end;
 //------------------------------------------------------------------------------
 var
@@ -36,15 +38,14 @@ var
   k         : byte;
   direction : boolean;
 begin
-  if (TMR1IF_bit) then
+  if (TMR3IF_bit) then
   begin
     inc(dwTicks);
+    TMR3IF_bit := 0;
 
-    TMR1IF_bit := 0;
+    TMR3H      := PRELOADHI;
+    TMR3L      := PRELOADLO;
 
-    TMR1H      := PRELOADHI;
-    TMR1L      := PRELOADLO;
-    
     //Rotary
     if ROTARY_1 <> ROTARY_1_LS then
     begin
@@ -63,7 +64,10 @@ begin
       wMotorAcc := wMotorAcc + wPulsePerRotary;
     end;
     ROTARY_1_LS := ROTARY_1;
-
+    
+    liCounter := ADC_Get_Sample(8);
+    
+    {
     //Buttons
     k := PORTD xor PORTD_LS;
     if k > 0 then
@@ -75,7 +79,7 @@ begin
           BUTTONFLAGS.i := 1;
       end;
     end;
-    PORTD_LS := PORTD;
+    PORTD_LS := PORTD;           }
 
     //Step motor pulses
     if STEP = 1 then

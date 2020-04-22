@@ -36,28 +36,30 @@ begin
 end;          }
 
 begin
+  PLLEN_bit := 1;
+  delay_ms(10); //!!!!!!!!!!!!!!!!
+
   initialize;
 
-  liCounter := 0;
-  ROTARY_1_LS := ROTARY_1;
-  PORTD_LS := PORTD;
-  BUTTONFLAGS := 0;
-
-  Feedrate_Set(1000);
-
-  wMotorAcc := 0;
-
-  InitTimer1();
-
-  PWM_Init;
-  PWM_Set(100);
   ADC_Init;
-  
+
+  INPUTS_LS := 0;
+  ROTARY_1_LS := ROTARY_1;
+
+  BUTTONFLAGS := 0;
+  liCounter := 0;
+  wMotorAcc := 0;
+  Feedrate_Set(1000);
+  InitTimer();
+
+{  PWM_Init;
+  PWM_Set(100);}
+
   LCD_initialize;
 
   while true do
   begin
-    Buttons_mainloop;
+    //Buttons_mainloop;
     LCD_mainloop;
   end;
 end.
