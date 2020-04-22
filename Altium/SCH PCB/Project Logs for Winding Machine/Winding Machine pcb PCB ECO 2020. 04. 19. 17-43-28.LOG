@@ -1,8 +1,0 @@
-Removed Pin From Net: NetName=NetR15_3 Pin=R14-1
-Removed Pin From Net: NetName=Net*1_15 Pin=R14-2
-Added Pin To Net: NetName=Net*1_1 Pin=R14-1
-Added Pin To Net: NetName=3.3V Pin=R14-2
-Added Pin To Net: NetName=NetR15_3 Pin=R16-1
-Added Pin To Net: NetName=Net*1_15 Pin=R16-2
-Added Member To Class: ClassName=Winding Machine sch Member=Component R16 Res1
-Added Room: Name=Winding Machine sch
