@@ -1,5 +1,6 @@
 unit PWM;
 uses
+  TImer,
   Declarations;
 
 procedure PWM_Init;
@@ -22,7 +23,7 @@ begin
   
   PWM1_Init(10000);
   PWM1_Start;
-  PWM_Set(0);
+  PWM_Set(80);
 end;
 //------------------------------------------------------------------------------
 procedure PWM_Set(val : byte);
@@ -42,10 +43,14 @@ var
 begin
   if dwticks > dwnextpwmtime then
   begin
-    dwnextpwmtime := dwticks + 10;
+    dwnextpwmtime := dwticks + (TICKSperSEC / 100);
+    
+    INTCON.GIE := 0;
     
     adval := ADC_Read(5);
     adval := ADC_Read(5);
+
+    INTCON.GIE := 1;
     
     adval := adval shr 4;
     PWM_Set(Lo(adval));

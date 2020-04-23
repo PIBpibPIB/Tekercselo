@@ -30,7 +30,7 @@ begin
 
   initialize;
 
-  BUZZER := 0;
+  BEEPER := 0;
 
   ADC_Init;
 
@@ -40,17 +40,17 @@ begin
   BUTTONFLAGS := 0;
   liCounter := 0;
   wMotorAcc := 0;
-  Feedrate_Set(1000);
+  Feedrate_Set(800);
   
-  InitTimer();
+  InitTimer;
   
   PWM_Init;
 
   LCD_initialize;
   
-  BUZZER := 1; delay_ms(50);  BUZZER := 0; 
-  delay_ms(50);
-  BUZZER := 1; delay_ms(50);  BUZZER := 0;
+  Beep(100);
+  delay_ms(200);
+  Beep(100);
 
   while true do
   begin

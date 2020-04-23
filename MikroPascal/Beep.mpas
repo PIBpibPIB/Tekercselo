@@ -1,0 +1,36 @@
+unit Beep;
+uses 
+  Declarations,
+  Timer;
+
+procedure Beep(duration : word);
+procedure Beep_IR(duration : word);
+procedure Beeper_interrupt;
+
+implementation
+var
+ stop : dword;
+//------------------------------------------------------------------------------
+procedure Beep(duration : word);
+begin
+  stop := dwticks + duration;
+  BEEPER := 1;
+end;
+//------------------------------------------------------------------------------
+procedure Beep_IR(duration : word);
+begin
+  stop := dwticks + duration;
+  BEEPER := 1;
+end;
+//------------------------------------------------------------------------------
+procedure Beeper_interrupt;
+begin
+  if BEEPER = 1 then
+    if dwTicks >= stop then
+      BEEPER := 0;
+end;
+//------------------------------------------------------------------------------
+end.
+//------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
+//------------------------------------------------------------------------------

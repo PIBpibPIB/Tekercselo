@@ -1,11 +1,11 @@
 unit Buttons;
 uses
+  Beep,
   PWM,
   feedrate,
   Display,
   Declarations;
 
-procedure Buttons_interrupt;
 procedure Buttons_mainloop;
 
 //display photo:  ac:display
@@ -21,15 +21,13 @@ procedure Buttons_mainloop;
 //                 3
 //------------------------------------------------------------------------------
 implementation
-var
-  INPUT   : byte;
 const
-  SELECT     = 0;
-  LEFT       = 1;
-  UP         = 2;
-  DOWN       = 3;
-  RIGHT      = 4;
-  STOP       = 5;
+  SELECT      = 0;
+  LEFT        = 1;
+  UP          = 2;
+  DOWN        = 3;
+  RIGHT       = 4;
+  STOP        = 5;
 
   ENDSTOP_R   = 6;
   ENDSTOP_L   = 7;
@@ -42,13 +40,16 @@ begin
   result := true;
 end;
 //------------------------------------------------------------------------------
-procedure Buttons_interrupt;
+procedure Buttons_mainloop;
 var
   adval     : word;
   k         : word;
+  INPUT     : byte;
+  wi : word;
+  bi : byte;
 begin
-  adval :=  ADC_Get_Sample(8);
-  adval :=  ADC_Get_Sample(8);
+  adval :=  ADC_Read(8);
+
   INPUT := 0;
 
   if isbetween(adval,    0,  298) then INPUT.RIGHT  := 1;
@@ -62,25 +63,21 @@ begin
   INPUT.ENDSTOP_L := ENDSTOP_LEFT;
 
   //Button edge detection
-  k := PORTD xor INPUT_LS;
+  k := INPUT xor INPUT_LS;
   if k > 0 then
   begin
     //Edge was detected
     for i := 0 to 7 do
     begin
       if (k.i = 1) and (INPUT.i = 0) then
+      begin
         BUTTONFLAGS.i := 1;
+        Beep_IR(5);
+      end;
     end;
   end;
   INPUT_LS := INPUT;
 
-end;
-//------------------------------------------------------------------------------
-procedure Buttons_mainloop;
-var
-  wi : word;
-  bi : byte;
-begin
   if BUTTONFLAGS > 0 then
   begin
     for i := 0 to 7 do
@@ -89,16 +86,24 @@ begin
       begin
         case i of
           //--------------------------------------------------------------
-          SELECT :  //D.0
+          SELECT :
           begin
-            DIR := not DIR;
+
           end;
           //--------------------------------------------------------------
-          LEFT :    //D.1
+          LEFT :
           begin
+            DIR := 0;
+            wMotorAcc := wMotorAcc + 250 * 5 * 200;
           end;
           //--------------------------------------------------------------
-          UP :      //D.2
+          RIGHT :
+          begin
+            DIR := 1;
+            wMotorAcc := wMotorAcc + 250 * 5 * 200;
+          end;
+          //--------------------------------------------------------------
+          UP :      
           begin
             wi := Feedrate_Get;
             wi := wi + 10;
@@ -107,8 +112,8 @@ begin
             LCD_refreshvalues;
           end;
           //--------------------------------------------------------------
-          DOWN :    //D.3
-          begin
+          DOWN :
+          begin                             
             wi := Feedrate_Get;
             if wi > 10 then
             begin
@@ -119,23 +124,17 @@ begin
             LCD_refreshvalues;
           end;
           //--------------------------------------------------------------
-          RIGHT :
+          STOP :
           begin
-            bi := PWM_Get;
+            PWM_Set(0);
           end;
           //--------------------------------------------------------------
-          STOP :         //D5
-          begin
-            liCounter := 0;
-            LCD_refreshvalues;
-          end;
-          //--------------------------------------------------------------
-          ENDSTOP_R :   //D6
+          ENDSTOP_R :
           begin
             DIR := not DIR;
           end;
           //--------------------------------------------------------------
-          ENDSTOP_L :   //D7
+          ENDSTOP_L :
           begin
             DIR := not DIR;
           end;

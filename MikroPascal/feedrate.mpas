@@ -1,14 +1,12 @@
 unit feedrate;
 uses Declarations;
 
-
-
 procedure Feedrate_Set(val : word);            // !!!!     [ um / revolution ]      !!!!!
 function  Feedrate_Get : word;                 // !!!!     [ um / revolution ]      !!!!!
 procedure StepMotor_interrupt;
 
 implementation
-const MAGICNUMBER = 2000;
+const MAGICNUMBER = 250;
 var
   feedrate      : word;                        // !!!!     [ um / revolution ]      !!!!!
   pulsewaittime : byte;
@@ -23,7 +21,7 @@ begin
   
   // ((200 / 1500) * d) / 20  <==>   d / 150
   // Szorzás MAGICNUMBER-rel, hogy legyen tört számláló.
-  wPulsePerRotary := (dword(MAGICNUMBER) * feedrate) / 150.0;
+  wPulsePerRotary := (dword(MAGICNUMBER) * feedrate) / (150.0 / 8.0);
 end;
 //------------------------------------------------------------------------------
 function Feedrate_Get : word;
@@ -36,7 +34,7 @@ begin
   if STEP = 1 then
   begin
     STEP := 0;
-    pulsewaittime := 4;
+    pulsewaittime := 1;
   end
   else
   begin

@@ -5,12 +5,13 @@ uses
   Declarations;
 
 const
-  PRELOADHI   = 208;
-  PRELOADLO   = 42;
-  TICKSperSEC = 1000;
+  PRELOADHI   = 0xE8;
+  PRELOADLO   = 0x90;
+  TICKSperSEC = 2000;
   
 procedure InitTimer;
 procedure Buttons_interrupt; external;
+procedure Beeper_interrupt; external;
 
 implementation
 
@@ -42,14 +43,9 @@ begin
     
     inc(dwTicks);
 
-    //Rotary
     Rotary_interrupt;
-
-    //Buttons
-    Buttons_interrupt;
-
-    //Step motor pulses
     StepMotor_interrupt;
+    Beeper_interrupt;
   end;
 end;
 //------------------------------------------------------------------------------

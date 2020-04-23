@@ -26,7 +26,7 @@ var
 
   BUTTON_STOP      : sbit at PORTC.6;
 
-  BUZZER           : sbit at LATC.1;
+  BEEPER           : sbit at LATC.1;
 
 var
   i                   : byte;
