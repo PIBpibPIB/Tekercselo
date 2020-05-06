@@ -54,12 +54,12 @@ File0=RotaryPulseCalc.xlsx
 File1=Buttons.xlsx
 [SEARCH_PATH]
 Count=8
-Path0=D:\Megosztott\mikroPascal PRO for PIC\defs\
-Path1=D:\Megosztott\mikroPascal PRO for PIC\uses\P18\
-Path2=C:\Users\Elektro\Desktop\tekercselo\MikroPascal\
-Path3=C:\MikroPascal Projects\mikroPascal PRO for PIC\defs\
-Path4=C:\MikroPascal Projects\mikroPascal PRO for PIC\uses\P18\
-Path5=C:\Users\maage\Desktop\Tekercselo\MikroPascal\
+Path0=C:\MikroPascal Projects\mikroPascal PRO for PIC\defs\
+Path1=C:\MikroPascal Projects\mikroPascal PRO for PIC\uses\P18\
+Path2=C:\Users\maage\Desktop\Tekercselo\MikroPascal\
+Path3=D:\Megosztott\mikroPascal PRO for PIC\defs\
+Path4=D:\Megosztott\mikroPascal PRO for PIC\uses\P18\
+Path5=C:\Users\Elektro\Desktop\tekercselo\MikroPascal\
 Path6=C:\Users\Elektro\Desktop\Tekercselo pascal\FaterTekercselo\
 Path7=C:\Users\maage\Desktop\tekercselo\FaterTekercselo\
 [HEADER_PATH]
@@ -80,8 +80,6 @@ File6=ADC
 File7=PWM
 File8=Peripheral_Pin_Select
 [EXPANDED NODES]
-Node1=Sources
-Node2=Image Files
-Node3=Active Comments Files
-Node4=Other Files
-Count=4
+Node1=Image Files
+Node2=Active Comments Files
+Count=2
