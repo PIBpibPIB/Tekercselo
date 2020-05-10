@@ -10,7 +10,7 @@ Voltage measurement on A0 pin respected to ground (on press state):
     reset button   : 4.66V
 
 2020-05-06
-    Default state  : ???V
+    Default state  : 3.3V  ?
 
     Right button   : 0V
     Up button      : 0.574V
