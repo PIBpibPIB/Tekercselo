@@ -2,6 +2,7 @@ unit Rotary;
 uses
   Declarations;
   
+procedure Beep_IR(duration : word); external;
 procedure Rotary_interrupt;
 
 var
@@ -31,6 +32,8 @@ begin
 
     lastdirection := direction;
 
+    if wMotorAcc > MAGICNUMBER then
+      Beep_IR(500);
     wMotorAcc := wMotorAcc + wPulsePerRotary;
   end;
   

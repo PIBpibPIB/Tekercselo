@@ -43,6 +43,8 @@ var
   wPulsePerRotary     : word; //[(pulse count *MAGICNUMBER) / (revolution /20) ]
   wMotorAcc           : word;
 
+const MAGICNUMBER = 250;
+
 procedure initialize;
   
 implementation

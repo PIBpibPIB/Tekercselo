@@ -6,7 +6,7 @@ function  Feedrate_Get : word;                 // !!!!     [ um / revolution ]  
 procedure StepMotor_interrupt;
 
 implementation
-const MAGICNUMBER = 250;
+
 var
   feedrate      : word;                        // !!!!     [ um / revolution ]      !!!!!
   pulsewaittime : byte;

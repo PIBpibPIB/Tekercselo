@@ -23,7 +23,8 @@ begin
   
   PWM1_Init(10000);
   PWM1_Start;
-  PWM_Set(80);
+  PWM1_Set_Duty(0);
+  PWM_Set(0);
 end;
 //------------------------------------------------------------------------------
 procedure PWM_Set(val : byte);
@@ -40,19 +41,29 @@ end;
 procedure PWM_Mainloop;
 var
   adval : word;
+  bi    : byte;
 begin
   if dwticks > dwnextpwmtime then
   begin
     dwnextpwmtime := dwticks + (TICKSperSEC / 100);
-    
+
     INTCON.GIE := 0;
     
     adval := ADC_Read(5);
     adval := ADC_Read(5);
+    adval := ADC_Read(5);
+    adval := ADC_Read(5);
+    adval := ADC_Read(5);
+    adval := ADC_Read(5);
+    adval := ADC_Read(5);
+
+    adval :=0 ;
+    for bi := 0 to 15 do
+      adval := adval + ADC_Read(5);
 
     INTCON.GIE := 1;
-    
-    adval := adval shr 4;
+
+    adval := adval shr 8;
     PWM_Set(Lo(adval));
   end;
 end;
