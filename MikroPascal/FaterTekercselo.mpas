@@ -33,6 +33,7 @@ begin
   BEEPER := 0;
 
   ADC_Init;
+  ADCON1 := %10111011;
 
   INPUT_LS := 0;
   ROTARY_1_LS := ROTARY_1;
@@ -40,12 +41,13 @@ begin
   BUTTONFLAGS := 0;
   liCounter := 0;
   wMotorAcc := 0;
-  Feedrate_Set(800);
+  Feedrate_Set(250);
   
   InitTimer;
   
   PWM_Init;
-
+  dwLastDirChange :=0;
+  
   LCD_initialize;
   
   Beep(100);

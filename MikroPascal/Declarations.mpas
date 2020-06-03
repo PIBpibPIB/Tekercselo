@@ -42,6 +42,7 @@ var
   
   wPulsePerRotary     : word; //[(pulse count *MAGICNUMBER) / (revolution /20) ]
   wMotorAcc           : word;
+  dwLastDirChange     : dword; //Mikor volt utoljara irany valtas?
 
 const MAGICNUMBER = 250;
 
@@ -68,8 +69,7 @@ begin
   CM2CON := 0;
   CM3CON := 0;
 
-  //minden input digital
-  ANCON0 := %11011111;
+  ANCON0 := %11001111;
   ANCON1 := %00011110;
 
   //digitalis kimenetek

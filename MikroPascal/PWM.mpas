@@ -49,17 +49,17 @@ begin
 
     INTCON.GIE := 0;
     
-    adval := ADC_Read(5);
-    adval := ADC_Read(5);
-    adval := ADC_Read(5);
-    adval := ADC_Read(5);
-    adval := ADC_Read(5);
-    adval := ADC_Read(5);
-    adval := ADC_Read(5);
+    adval := ADC_Get_Sample(5);
+    adval := ADC_Get_Sample(5);
+    adval := ADC_Get_Sample(5);
+    adval := ADC_Get_Sample(5);
+    adval := ADC_Get_Sample(5);
+    adval := ADC_Get_Sample(5);
+    adval := ADC_Get_Sample(5);
 
     adval :=0 ;
     for bi := 0 to 15 do
-      adval := adval + ADC_Read(5);
+      adval := adval + ADC_Get_Sample(5);
 
     INTCON.GIE := 1;
 

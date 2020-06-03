@@ -4,6 +4,7 @@ uses
   PWM,
   feedrate,
   Display,
+  TImer,
   Declarations;
 
 procedure Buttons_mainloop;
@@ -32,6 +33,16 @@ const
   ENDSTOP_R   = 6;
   ENDSTOP_L   = 7;
 
+procedure ChangeDirection;
+begin
+  if (dwTicks - dwLastDirChange) > (TICKSperSEC / 2) then
+  begin
+    DIR := not DIR;
+    dwLastDirChange := dwTicks;
+    Beep(50);
+  end;
+end;
+
 //------------------------------------------------------------------------------
 function isbetween(val, min, max : word) : boolean;
 begin
@@ -48,7 +59,7 @@ var
   wi : word;
   bi : byte;
 begin
-  adval :=  ADC_Read(8);
+  adval :=  ADC_Get_Sample(8);
 
   INPUT := 0;
 
@@ -72,7 +83,8 @@ begin
       if (k.i = 1) and (INPUT.i = 0) then
       begin
         BUTTONFLAGS.i := 1;
-        Beep(5);
+        if i < 6 then
+          Beep(5);
       end;
     end;
   end;
@@ -132,12 +144,12 @@ begin
           //--------------------------------------------------------------
           ENDSTOP_R :
           begin
-            DIR := not DIR;
+            ChangeDirection;
           end;
           //--------------------------------------------------------------
           ENDSTOP_L :
           begin
-            DIR := not DIR;
+            ChangeDirection;
           end;
           //--------------------------------------------------------------
         end;

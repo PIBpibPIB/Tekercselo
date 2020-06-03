@@ -5,9 +5,9 @@ uses
   Declarations;
 
 const
-  PRELOADHI   = 0xE8;
-  PRELOADLO   = 0x90;
-  TICKSperSEC = 2000;
+//  PRELOADHI   = 0xE8;  PRELOADLO   = 0x90;  TICKSperSEC = 2000;
+//  PRELOADHI   = 0xF4;  PRELOADLO   = 0x48;  TICKSperSEC = 4000;
+  PRELOADHI   = 0xF8;  PRELOADLO   = 0x30;  TICKSperSEC = 6000;
   
 procedure InitTimer;
 procedure Buttons_interrupt; external;

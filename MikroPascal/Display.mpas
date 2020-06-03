@@ -16,6 +16,7 @@ procedure DisplayCounter;
 var
   shadow : longint;
   txt    : array[7] of char;
+  wi     : word;
 begin
   GIE_bit := 0;
   shadow := liCounter;
